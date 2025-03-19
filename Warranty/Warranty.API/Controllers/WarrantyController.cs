@@ -33,6 +33,15 @@ namespace Warranty.API.Controllers
         }
 
         [Authorize(Policy = "UserOrAdmin")]
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<WarrantyDto>>> GetByUserId(int userId)
+        {
+            var warranties = await _iService.GetWarrantiesByUserId(userId);
+            //return warranties == null ? NotFound() : Ok(warranties);
+            return Ok(warranties);
+        }
+
+        [Authorize(Policy = "UserOrAdmin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<WarrantyDto>> Get(int id)
         {

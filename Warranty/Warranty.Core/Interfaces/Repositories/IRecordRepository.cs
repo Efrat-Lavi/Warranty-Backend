@@ -10,6 +10,8 @@ namespace Warranty.Core.Interfaces.Repositories
     public interface IRecordRepository:IRepository<RecordModel>
     {
         Task<List<RecordModel>> GetFull();
+        Task<List<RecordModel>> GetRecordsByUserId(int userId);
+        
 
     }
 }

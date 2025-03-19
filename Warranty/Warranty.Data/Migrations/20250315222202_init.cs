@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Warranty.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class createDB : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -130,11 +130,18 @@ namespace Warranty.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    WarrantyId = table.Column<int>(type: "int", nullable: false)
+                    WarrantyId = table.Column<int>(type: "int", nullable: false),
+                    RoleWarrantyId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_records", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_records_roles_RoleWarrantyId",
+                        column: x => x.RoleWarrantyId,
+                        principalTable: "roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_records_users_UserId",
                         column: x => x.UserId,
@@ -154,6 +161,11 @@ namespace Warranty.Data.Migrations
                 name: "IX_permissions_RoleModelId",
                 table: "permissions",
                 column: "RoleModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_records_RoleWarrantyId",
+                table: "records",
+                column: "RoleWarrantyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_records_UserId",

@@ -11,6 +11,7 @@ namespace Warranty.Core.Interfaces.Services
     public interface IWarrantyServices
     {
         public Task<IEnumerable<WarrantyDto>> GetAllWarranties();
+        public Task<IEnumerable<WarrantyDto>> GetWarrantiesByUserId(int userId);
 
         public Task<WarrantyDto> GetWarrantyById(int id);
 

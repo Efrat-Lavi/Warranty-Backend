@@ -12,8 +12,8 @@ using Warranty.Data;
 namespace Warranty.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250312001055_createDB")]
-    partial class createDB
+    [Migration("20250315222202_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,6 +86,9 @@ namespace Warranty.Data.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("RoleWarrantyId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -93,6 +96,8 @@ namespace Warranty.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleWarrantyId");
 
                     b.HasIndex("UserId");
 
@@ -190,6 +195,12 @@ namespace Warranty.Data.Migrations
 
             modelBuilder.Entity("Warranty.Core.Models.RecordModel", b =>
                 {
+                    b.HasOne("Warranty.Core.Models.RoleModel", "RoleWarranty")
+                        .WithMany()
+                        .HasForeignKey("RoleWarrantyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Warranty.Core.Models.UserModel", "User")
                         .WithMany("Records")
                         .HasForeignKey("UserId")
@@ -201,6 +212,8 @@ namespace Warranty.Data.Migrations
                         .HasForeignKey("WarrantyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("RoleWarranty");
 
                     b.Navigation("User");
 

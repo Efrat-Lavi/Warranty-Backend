@@ -63,7 +63,7 @@ namespace Warranty.Service
         {
             bool succeed = await _iRepository.companyRepository.Delete(id);
             if (succeed)
-                await_iRepository.Save();
+                await _iRepository.Save();
             return succeed;
         }
     }

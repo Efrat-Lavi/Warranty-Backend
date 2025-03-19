@@ -16,5 +16,11 @@ namespace Warranty.Data.Repositories
         {
             return await _dbSet.Include(w=> w.Company).ToListAsync();
         }
+        public async Task<List<WarrantyModel>> GetByIds(List<int> warrantyIds)
+        {
+            return await _dbSet.Where(w => warrantyIds.Contains(w.Id)).Include(w=>w.Company)
+                                 .ToListAsync();
+        }
+
     }
 }

@@ -14,7 +14,7 @@ namespace Warranty.Data.Repositories
     {
         public CompanyRepository(DataContext dataContext) : base(dataContext) { }
 
-        public async Task<List<CompanyModel>> GetFullAsync()
+        public async Task<List<CompanyModel>> GetFull()
         {
             return await _dbSet.ToListAsync();
         }

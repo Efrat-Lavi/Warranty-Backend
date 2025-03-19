@@ -17,14 +17,15 @@ namespace Warranty.Data.Repositories
         {
             return await _dbSet.Include(r => r.User)
                            .Include(r => r.Warranty)
+                           .Include(r=>r.RoleWarranty)
                             .ToListAsync();
         }
 
-        public async Task<List<RecordModel>> GetRecordsByUserId(int id)
+        public async Task<List<RecordModel>> GetRecordsByUserId(int userId)
         {
             return await _dbSet.Include(r => r.User)
                            .Include(r => r.Warranty)
-                           .Where(r => r.UserId == id)
+                           .Where(r => r.UserId == userId)
                            .ToListAsync();
         }
 

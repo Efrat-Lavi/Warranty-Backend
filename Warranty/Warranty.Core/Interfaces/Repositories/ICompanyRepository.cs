@@ -10,7 +10,7 @@ namespace Warranty.Core.Interfaces.Repositories
 
     public interface ICompanyRepository:IRepository<CompanyModel>
     {
-        Task<List<CompanyModel>> GetFullAsync();
+        Task<List<CompanyModel>> GetFull();
 
     }
 }

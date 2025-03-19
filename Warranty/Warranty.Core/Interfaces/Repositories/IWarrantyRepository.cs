@@ -10,6 +10,9 @@ namespace Warranty.Core.Interfaces.Repositories
     public interface IWarrantyRepository:IRepository<WarrantyModel>
     {
         Task<List<WarrantyModel>> GetFull();
+        Task<List<WarrantyModel>> GetByIds(List<int> warrantyIds);
+
+        
 
     }
 }

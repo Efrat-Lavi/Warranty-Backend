@@ -33,10 +33,16 @@ namespace Warranty.Service
             var record = await _iRepository.recordRepository.GetById(id);
             return _mapper.Map<RecordDto>(record);
         }
-
+        public async Task<IEnumerable<RecordDto>> GetRecordsByUserId(int userId)
+        {
+            var records = await _iRepository.recordRepository.GetRecordsByUserId(userId);
+            return _mapper.Map<IEnumerable<RecordDto>>(records);
+        }
         public async Task<RecordDto> AddRecord(RecordDto recordDto)
         {
             var recordEntity = _mapper.Map<RecordModel>(recordDto);
+            if (await _iRepository.warrantyRepository.GetById(recordEntity.WarrantyId) == null)
+                return null;
             recordEntity = await _iRepository.recordRepository.Add(recordEntity);
             if (recordEntity != null)
             {

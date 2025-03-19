@@ -13,6 +13,7 @@ namespace Warranty.Core.Interfaces.Services
         public Task<IEnumerable<RecordDto>> GetAllRecords();
 
         public Task<RecordDto> GetRecordById(int id);
+        public Task<IEnumerable<RecordDto>> GetRecordsByUserId(int userId);
 
         public Task<RecordDto> AddRecord(RecordDto record);
 

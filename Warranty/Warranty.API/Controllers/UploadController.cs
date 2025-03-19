@@ -1,91 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
    using Amazon.S3;
     using Amazon.S3.Model;
+using Recipes.Core.Interfaces.IServices;
 
 
 namespace Warranty.API.Controllers
 {
-    //[ApiController]
-    //[Route("api/upload")]
-    //public class UploadController : ControllerBase
-    //{
-    //    private readonly IAmazonS3 _s3Client;
-
-    //    public UploadController(IAmazonS3 s3Client)
-    //    {
-    //        _s3Client = s3Client;
-    //    }
-
-    //    [HttpGet("presigned-url")]
-    //    public async Task<IActionResult> GetPresignedUrl([FromQuery] string fileName)
-    //    {
-    //        var request = new GetPreSignedUrlRequest
-    //        {
-    //            BucketName = "files-warranty",
-    //            Key = fileName,
-    //            Verb = HttpVerb.PUT,
-    //            Expires = DateTime.UtcNow.AddMinutes(5),
-    //            ContentType = "image/jpeg/pdf/png" // או סוג הקובץ המתאים
-    //        };
-
-    //        string url = _s3Client.GetPreSignedURL(request);
-    //        return Ok(new { url });
-    //    }
-    //}
+   
     [ApiController]
     [Route("api/upload")]
     public class UploadController : ControllerBase
     {
-        private readonly IAmazonS3 _s3Client;
-        private readonly HttpClient _httpClient;
+        private readonly IS3Service _s3Service;
 
-        public UploadController(IAmazonS3 s3Client, HttpClient httpClient)
-        {
-            _s3Client = s3Client;
-            _httpClient = httpClient;
-        }
+
+         public UploadController(IS3Service s3Server)
+         {
+            _s3Service = s3Server;
+         }
        
-        // פעולה להחזיר את הקישור המותנה להעלאת קובץ
-        [HttpGet("presigned-url")]
-        public async Task<IActionResult> GetPresignedUrl([FromQuery] string fileName)
+        // ⬆️ שלב 1: קבלת URL להעלאת קובץ ל-S3
+        
+        [HttpGet("upload-url")]
+        public async Task<IActionResult> GetUploadUrl([FromQuery] string userId, [FromQuery] string fileName, [FromQuery] string contentType)
         {
-            var request = new GetPreSignedUrlRequest
-            {
-                BucketName = "files-warranty",
-                Key = fileName,
-                Verb = HttpVerb.PUT,
-                Expires = DateTime.UtcNow.AddMinutes(5),
-                ContentType = "application/octet-stream" // סוג הקובץ הכללי
-            };
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(fileName))
+                return BadRequest("Missing userId or fileName");
 
-            string url = _s3Client.GetPreSignedURL(request);
+            var url = await _s3Service.GeneratePresignedUrlAsync(userId, fileName, contentType);
             return Ok(new { url });
         }
 
-        // פעולה להעלות את הקובץ ל-S3 ואז לשלוח אותו ל-AI
-        [HttpPost("process-file")]
-        public async Task<IActionResult> ProcessFile(IFormFile file)
+        // ⬇️ שלב 2: קבלת URL להורדת קובץ מה-S3
+        [HttpGet("download-url/{fileName}")]
+        public async Task<IActionResult> GetDownloadUrl([FromQuery] string userId, string fileName)
         {
-            if (file == null || file.Length == 0)
-            {
-                return BadRequest("No file uploaded.");
-            }
-
-            
-            // 2. שליחת הקובץ ל-AI לאחר העלאה ל-S3
-            var aiRequest = new MultipartFormDataContent();
-            aiRequest.Add(new StringContent(url), "fileUrl");
-
-            var aiResponse = await _httpClient.PostAsync("AI_URL", aiRequest);
-            if (!aiResponse.IsSuccessStatusCode)
-            {
-                return StatusCode((int)aiResponse.StatusCode, "Error processing file with AI.");
-            }
-
-            var aiResult = await aiResponse.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject(aiResult);
-
-            return Ok(result);
+            var url = await _s3Service.GetDownloadUrlAsync(userId,fileName);
+            return Ok(new { downloadUrl = url });
         }
+            
+          
     }
 }

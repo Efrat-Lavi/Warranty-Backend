@@ -1,3 +1,4 @@
+using Amazon.S3;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using Warranty.API;
@@ -24,11 +25,14 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddSwagger();
 builder.Services.ConfigureServices();
 
-builder.Services.AddAutoMapper(typeof(MappingProfile), typeof(MappingPostProfile));
 
 builder.AddJwtAuthentication();
 builder.AddJwtAuthorization();
 builder.Services.AddAllowAnyCors();
+
+//builder.Services.AddHttpClient();
+//builder.Services.AddAWSService<IAmazonS3>();
+
 
 var app = builder.Build();
 

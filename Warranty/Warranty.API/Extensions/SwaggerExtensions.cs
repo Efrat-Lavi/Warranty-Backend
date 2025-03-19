@@ -32,7 +32,6 @@ namespace Warranty.API.Extensions
                     }
                 });
             });
-
         }
 
     }

@@ -44,7 +44,7 @@ namespace Warranty.Service
         public async Task<UserModel> ValidateUser(string email, string password)
         {
             UserModel user = await _repositoryManager.userRepository.GetUserByEmail(email);
-            Console.WriteLine(user.RoleId);
+        
             if (user != null && BCrypt.Net.BCrypt.Verify(password, user.HashPassword))
             {
                 return user;
@@ -75,7 +75,7 @@ namespace Warranty.Service
                 return Result<LoginResponseDto>.Success(response);
             }
 
-            return Result<LoginResponseDto>.Failure("Invalid username or password.");
+            return Result<LoginResponseDto>.NotFound("Invalid username or password.");
         }
 
         public async Task<Result<bool>> Register(RegisterDto registerDto)

@@ -5,7 +5,6 @@ using Warranty.Core.DTOs;
 using Warranty.Core.Interfaces.Services;
 using Warranty.Service;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Warranty.API.Controllers
 {
@@ -24,7 +23,7 @@ namespace Warranty.API.Controllers
             {
                 return Ok(result.Data);
             }
-            return Unauthorized(result.ErrorMessage);
+            return NotFound(result.ErrorMessage);
         }
 
         [HttpPost("register")]

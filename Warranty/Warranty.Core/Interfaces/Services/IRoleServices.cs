@@ -17,6 +17,6 @@ namespace Warranty.Core.Interfaces.Services
         public Task<RoleDto> AddRole(RoleDto role);
         public Task<RoleDto> UpdateRole(int id, RoleDto role);
 
-        public Task<bool>> DeleteRole(int id);
+        public Task<bool> DeleteRole(int id);
     }
 }

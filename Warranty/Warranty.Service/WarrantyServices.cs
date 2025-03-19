@@ -27,6 +27,16 @@ namespace Warranty.Service
             var warranties = await _iRepository.warrantyRepository.GetFull();
             return _mapper.Map<IEnumerable<WarrantyDto>>(warranties);
         }
+        public async Task<IEnumerable<WarrantyDto>> GetWarrantiesByUserId(int userId)
+        {
+            var records = await _iRepository.recordRepository.GetRecordsByUserId(userId);
+            var warrantyIds = records.Select(r => r.WarrantyId).ToList();
+
+            var warranties = await _iRepository.warrantyRepository.GetByIds(warrantyIds); // שליפה בבת אחת
+
+            return _mapper.Map<IEnumerable<WarrantyDto>>(warranties);
+        }
+
 
         public async Task<WarrantyDto> GetWarrantyById(int id)
         {

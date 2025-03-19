@@ -13,12 +13,17 @@ namespace Warranty.Core.Models
         [Key]
         public int Id { get; set; }
 
+        [Required]
         [ForeignKey("UserId")]
         public int UserId { get; set; }
         public UserModel User { get; set; }
 
+        [Required]
         [ForeignKey("WarrantyId")]
         public int WarrantyId { get; set; }
         public WarrantyModel Warranty { get; set; }
+
+        [Required]
+        public RoleModel RoleWarranty { get; set; }
     }
 }

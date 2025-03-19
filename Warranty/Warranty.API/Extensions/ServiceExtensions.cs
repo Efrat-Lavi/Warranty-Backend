@@ -4,6 +4,9 @@ using Warranty.Core.Interfaces;
 using Warranty.Data.Repositories;
 using Warranty.Data;
 using Warranty.Service;
+using Warranty.Core;
+using Recipes.Core.Interfaces.IServices;
+using Recipes.Service.Services;
 
 namespace Warranty.API.Extensions
 {
@@ -11,7 +14,10 @@ namespace Warranty.API.Extensions
     {
         public static void ConfigureServices(this IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(MappingProfile), typeof(MappingPostProfile));
+
             //repositories
+
             services.AddScoped<IRepositoryManager, RepositoryManager>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ICompanyRepository, CompanyRepository>();
@@ -29,6 +35,8 @@ namespace Warranty.API.Extensions
             services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IWarrantyServices, WarrantyServices>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IS3Service, S3Service>();
+
 
         }
     }

@@ -11,55 +11,6 @@ using Warranty.Core.Models;
 
 namespace Warranty.Service
 {
-    //public class PermissionServices:IPermissionServices
-    //{
-    //    private readonly IRepositoryManager _iRepository;
-
-    //    public PermissionServices(IRepositoryManager iRepository)
-    //    {
-    //        _iRepository = iRepository;
-    //    }
-
-    //    public IEnumerable<PermissionModel> GetAllPermissions()
-    //    {
-    //        return _iRepository.permissionRepository.GetFull();
-    //    }
-
-    //    public PermissionModel GetPermissionById(int id)
-    //    {
-    //        return _iRepository.permissionRepository.GetById(id);
-    //    }
-
-    //    public PermissionModel AddPermission(PermissionModel permission)
-    //    {
-    //        var newPermission = _iRepository.permissionRepository.Add(permission);
-    //        if (newPermission != null)
-    //        {
-    //            _iRepository.save();
-    //            return newPermission;
-    //        }
-    //        return null;
-    //    }
-
-    //    public PermissionModel UpdatePermission(int id, PermissionModel permission)
-    //    {
-    //        var updatedPermission = _iRepository.permissionRepository.Update(id, permission);
-    //        if (updatedPermission != null)
-    //        {
-    //            _iRepository.save();
-    //            return updatedPermission;
-    //        }
-    //        return null;
-    //    }
-
-    //    public bool DeletePermission(int id)
-    //    {
-    //        bool succeed = _iRepository.permissionRepository.Delete(id);
-    //        if (succeed)
-    //            _iRepository.save();
-    //        return succeed;
-    //    }
-    //}
     public class PermissionServices : IPermissionServices
     {
         private readonly IRepositoryManager _iRepository;

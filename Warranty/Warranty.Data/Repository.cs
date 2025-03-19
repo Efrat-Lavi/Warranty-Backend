@@ -22,19 +22,19 @@ namespace Warranty.Data
             return await _dbSet.ToListAsync();
         }
 
-        public T GetById(int id)
+        public async Task<T> GetById(int id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
-        public T Add(T t)
+        public async Task<T> Add(T t)
         {
             _dbSet.Add(t);
             return t;
         }
-        public T Update(int id, T t)
+        public async Task<T> Update(int id, T t)
         {
 
-            var existingEntity = _dbSet.Find(id);
+            var existingEntity = await _dbSet.FindAsync(id);
             if (existingEntity == null || t == null)
             {
                 return null;
@@ -50,13 +50,14 @@ namespace Warranty.Data
             }
             return t;
         }
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             if (_dbSet == null || _dbSet.Find(id) == null)
                 return false;
             try
             {
-                _dbSet.Remove(GetById(id));
+                T t = await GetById(id);
+                 _dbSet.Remove(t);
 
                 return true;
             }

@@ -41,6 +41,15 @@ namespace Warranty.API.Controllers
         }
 
         [Authorize(Policy = "UserOrAdmin")]
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<RecordDto>> GetbyUserId(int userId)
+        {
+            var record = await _iService.GetRecordsByUserId(userId);
+            return Ok(record);
+            //return record == null ? NotFound() : Ok(record);
+        }
+
+        [Authorize(Policy = "UserOrAdmin")]
         [HttpPost]
         public async Task<ActionResult<RecordDto>> Post([FromBody] RecordPostModel recordPostModel)
         {
