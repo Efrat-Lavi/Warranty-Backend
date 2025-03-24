@@ -11,8 +11,10 @@ namespace Warranty.Core.Interfaces.Repositories
     {
         Task<List<WarrantyModel>> GetFull();
         Task<List<WarrantyModel>> GetByIds(List<int> warrantyIds);
+        //Task<WarrantyModel> UpdateWarranty(int id, WarrantyModel warranty);
 
-        
+
+
 
     }
 }

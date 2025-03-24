@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Warranty.Core.Models
 {
+    [Table("Records")]
     public class RecordModel
     {
         [Key]
@@ -24,6 +25,6 @@ namespace Warranty.Core.Models
         public WarrantyModel Warranty { get; set; }
 
         [Required]
-        public RoleModel RoleWarranty { get; set; }
+        public string RoleWarranty { get; set; }
     }
 }

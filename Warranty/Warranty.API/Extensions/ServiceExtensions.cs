@@ -36,6 +36,17 @@ namespace Warranty.API.Extensions
             services.AddScoped<IWarrantyServices, WarrantyServices>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IS3Service, S3Service>();
+            services.AddScoped<IEmailService, EmailService>();
+
+            //Email
+
+
+
+            // הוספת ה-Service
+            services.AddHostedService<WarrantyExpirationJob>();
+
+
+
 
 
         }

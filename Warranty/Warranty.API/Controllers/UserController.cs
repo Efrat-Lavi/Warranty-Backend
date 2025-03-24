@@ -41,6 +41,14 @@ namespace Warranty.API.Controllers
         }
 
         [Authorize(Policy = "UserOrAdmin")]
+        [HttpGet("email/{email}")]
+        public async Task<ActionResult<UserDto>> GetByEmail(string email)
+        {
+            var user = await _iService.GetUserByEmail(email);
+            return user == null ? NotFound() : Ok(user);
+        }
+
+        [Authorize(Policy = "UserOrAdmin")]
         [HttpPost]
         public async Task<ActionResult<UserDto>> Post([FromBody] UserPostModel userPostModel)
         {

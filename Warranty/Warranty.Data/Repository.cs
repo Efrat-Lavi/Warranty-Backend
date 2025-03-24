@@ -41,9 +41,9 @@ namespace Warranty.Data
             }
             var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                                       .Where(prop => prop.Name != "Id");
-
             foreach (var property in properties)
             {
+                Console.WriteLine(property);
                 var updatedValue = property.GetValue(t);
                 if (updatedValue != null)
                     property.SetValue(existingEntity, updatedValue);

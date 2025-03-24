@@ -13,7 +13,8 @@ namespace Warranty.Core.Interfaces.Services
         public Task<IEnumerable<UserDto>> GetAllUsers();
 
         public Task<UserDto> GetUserById(int id);
-
+        public Task<UserDto> GetUserByEmail(string email);
+        
         public Task<UserDto> AddUser(UserDto user);
 
         public Task<UserDto> UpdateUser(int id, UserDto user);

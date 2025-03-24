@@ -28,7 +28,7 @@ namespace Warranty.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CompanyDto>>> Get()
         {
-            var companies = _iService.GetAllCompanies();
+            var companies =await _iService.GetAllCompanies();
             return companies == null ? NotFound() : Ok(companies);
         }
 

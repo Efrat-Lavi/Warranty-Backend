@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Warranty.Core.Models
 {
+
+    [Table("Permissions")]
+
     public class PermissionModel
     {
         [Key]

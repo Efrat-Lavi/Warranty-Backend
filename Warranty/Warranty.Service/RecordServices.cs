@@ -44,12 +44,33 @@ namespace Warranty.Service
             if (await _iRepository.warrantyRepository.GetById(recordEntity.WarrantyId) == null)
                 return null;
             recordEntity = await _iRepository.recordRepository.Add(recordEntity);
+
             if (recordEntity != null)
             {
-                await _iRepository.Save();
-                return _mapper.Map<RecordDto>(recordEntity);
+                //var warranty = await _iRepository.warrantyRepository.GetById(recordEntity.WarrantyId);
+                //if (warranty == null)
+                //    return null;
+
+                //if (warranty.Users == null)
+                //    warranty.Users = new List<UserModel>();
+                //var user = await _iRepository.userRepository.GetById(recordEntity.UserId);
+                //warranty.Users.Add(user);
+
+                //var w = new WarrantyModel { Users = warranty.Users };
+                //w = await _iRepository.warrantyRepository.UpdateWarranty(recordDto.WarrantyId, w);
+                //if (w != null)
+                    try
+                    {
+                        await _iRepository.Save();
+                    }
+                    catch (Exception e)
+                    {
+
+                        Console.WriteLine($"Error in Save: {e.Message}");
+                        throw;
+                    }
             }
-            return null;
+            return _mapper.Map<RecordDto>(recordEntity);
         }
 
         public async Task<RecordDto> UpdateRecord(int id, RecordDto recordDto)
@@ -66,12 +87,28 @@ namespace Warranty.Service
 
         public async Task<bool> DeleteRecord(int id)
         {
+            //מחיקת המשתמש ממערך המשותפים של הקובץ
+            //var r = await _iRepository.recordRepository.GetById(id);
+            //if (r != null)
+            //{
+            //    var warranty = await _iRepository.warrantyRepository.GetById(r.WarrantyId);
+            //    if (warranty == null)
+            //        return false;
+
+            //    var user = await _iRepository.userRepository.GetById(r.UserId);
+            //    warranty.Users.Remove(user);
+
+            //    var w = new WarrantyModel { Users = warranty.Users };
+            //    w = await _iRepository.warrantyRepository.UpdateWarranty(r.WarrantyId, w);
+            //}
+            //מחיקת השיתוף
             bool succeed = await _iRepository.recordRepository.Delete(id);
             if (succeed)
+            {
                 await _iRepository.Save();
+            }
             return succeed;
         }
 
     }
-
 }

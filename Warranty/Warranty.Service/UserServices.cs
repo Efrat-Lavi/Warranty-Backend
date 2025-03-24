@@ -33,6 +33,11 @@ namespace Warranty.Service
             var user = await _iRepository.userRepository.GetById(id);
             return _mapper.Map<UserDto>(user);
         }
+        public async Task<UserDto> GetUserByEmail(string email)
+        {
+            var user = await _iRepository.userRepository.GetUserByEmail(email);
+            return _mapper.Map<UserDto>(user);
+        }
 
         public async Task<UserDto> AddUser(UserDto userDto)
         {

@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Warranty.Core.Models
 {
+
+    [Table("Companies")]
     public class CompanyModel
     {
         [Key]

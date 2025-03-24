@@ -8,8 +8,8 @@ namespace Recipes.Core.Interfaces.IServices
 {
     public interface IS3Service
     {
-        public Task<string> GeneratePresignedUrlAsync(string userId,string fileName, string contentType);
+        public Task<string> GeneratePresignedUrlAsync(string fileName, string contentType);
 
-        public Task<string> GetDownloadUrlAsync(string userId,string fileName);
+        public Task<string> GetDownloadUrlAsync(string fileName);
     }
 }

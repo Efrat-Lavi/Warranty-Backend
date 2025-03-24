@@ -11,7 +11,10 @@ namespace Warranty.Core.Interfaces.Repositories
     {
         Task<List<RecordModel>> GetFull();
         Task<List<RecordModel>> GetRecordsByUserId(int userId);
-        
+        Task<List<RecordModel>> GetRecordsByWarrantyId(int userId);
+        Task<List<RecordModel>> GetRecordsByDate(DateTime date);
+
+
 
     }
 }

@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Warranty.Core.Models
 {
+    [Table("Warranties")]
+
     public class WarrantyModel
     {
         [Key]
@@ -25,5 +27,6 @@ namespace Warranty.Core.Models
         [ForeignKey("CompanyId")]
         public int CompanyId { get; set; }
         public CompanyModel Company { get; set; }
+        public List<RecordModel> Records { get; set; }
     }
 }

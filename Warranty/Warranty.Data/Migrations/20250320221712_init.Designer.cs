@@ -12,7 +12,7 @@ using Warranty.Data;
 namespace Warranty.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250315222202_init")]
+    [Migration("20250320221712_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -48,7 +48,7 @@ namespace Warranty.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("comoanies");
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("Warranty.Core.Models.PermissionModel", b =>
@@ -75,7 +75,7 @@ namespace Warranty.Data.Migrations
 
                     b.HasIndex("RoleModelId");
 
-                    b.ToTable("permissions");
+                    b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("Warranty.Core.Models.RecordModel", b =>
@@ -86,8 +86,9 @@ namespace Warranty.Data.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("RoleWarrantyId")
-                        .HasColumnType("int");
+                    b.Property<string>("RoleWarranty")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -97,13 +98,11 @@ namespace Warranty.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleWarrantyId");
-
                     b.HasIndex("UserId");
 
                     b.HasIndex("WarrantyId");
 
-                    b.ToTable("records");
+                    b.ToTable("Records");
                 });
 
             modelBuilder.Entity("Warranty.Core.Models.RoleModel", b =>
@@ -121,7 +120,7 @@ namespace Warranty.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("roles");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Warranty.Core.Models.UserModel", b =>
@@ -149,11 +148,16 @@ namespace Warranty.Data.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("WarrantyModelId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("users");
+                    b.HasIndex("WarrantyModelId");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Warranty.Core.Models.WarrantyModel", b =>
@@ -183,7 +187,7 @@ namespace Warranty.Data.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("warranties");
+                    b.ToTable("Warranties");
                 });
 
             modelBuilder.Entity("Warranty.Core.Models.PermissionModel", b =>
@@ -195,12 +199,6 @@ namespace Warranty.Data.Migrations
 
             modelBuilder.Entity("Warranty.Core.Models.RecordModel", b =>
                 {
-                    b.HasOne("Warranty.Core.Models.RoleModel", "RoleWarranty")
-                        .WithMany()
-                        .HasForeignKey("RoleWarrantyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Warranty.Core.Models.UserModel", "User")
                         .WithMany("Records")
                         .HasForeignKey("UserId")
@@ -212,8 +210,6 @@ namespace Warranty.Data.Migrations
                         .HasForeignKey("WarrantyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("RoleWarranty");
 
                     b.Navigation("User");
 
@@ -227,6 +223,10 @@ namespace Warranty.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Warranty.Core.Models.WarrantyModel", null)
+                        .WithMany("Users")
+                        .HasForeignKey("WarrantyModelId");
 
                     b.Navigation("Role");
                 });
@@ -250,6 +250,11 @@ namespace Warranty.Data.Migrations
             modelBuilder.Entity("Warranty.Core.Models.UserModel", b =>
                 {
                     b.Navigation("Records");
+                });
+
+            modelBuilder.Entity("Warranty.Core.Models.WarrantyModel", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

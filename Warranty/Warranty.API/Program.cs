@@ -1,5 +1,6 @@
 using Amazon.S3;
 using Microsoft.EntityFrameworkCore;
+using Recipes.Service.Services;
 using System.Text.Json.Serialization;
 using Warranty.API;
 using Warranty.API.Extensions;
@@ -29,6 +30,9 @@ builder.Services.ConfigureServices();
 builder.AddJwtAuthentication();
 builder.AddJwtAuthorization();
 builder.Services.AddAllowAnyCors();
+
+//builder.Services.AddScoped<WarrantyExpirationJob>();
+
 
 //builder.Services.AddHttpClient();
 //builder.Services.AddAWSService<IAmazonS3>();

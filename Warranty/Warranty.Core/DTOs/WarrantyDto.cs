@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Warranty.Core.Models;
 
 namespace Warranty.Core.DTOs
 {
@@ -20,5 +21,7 @@ namespace Warranty.Core.DTOs
 
         public int CompanyId { get; set; }
         public CompanyDto Company { get; set; }
+        public List<RecordModel> Records { get; set; }
+
     }
 }

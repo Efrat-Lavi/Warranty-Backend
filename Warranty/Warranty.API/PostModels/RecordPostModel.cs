@@ -13,7 +13,7 @@ namespace Warranty.API.PostModels
     {
         public int UserId { get; set; }
         public int WarrantyId { get; set; }
-        public RolePostModel RoleWarranty { get; set; }
+        public string RoleWarranty { get; set; }
 
     }
 }

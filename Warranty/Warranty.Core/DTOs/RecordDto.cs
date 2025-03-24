@@ -17,7 +17,7 @@ namespace Warranty.Core.DTOs
         public UserDto User { get; set; }
         public int WarrantyId { get; set; }
         public WarrantyDto Warranty { get; set; }
-        public RoleDto RoleWarranty { get; set; }
+        public string RoleWarranty { get; set; }
 
     }
 }
