@@ -32,7 +32,7 @@ namespace Warranty.Service
             var records = await _iRepository.recordRepository.GetRecordsByUserId(userId);
             var warrantyIds = records.Select(r => r.WarrantyId).ToList();
 
-            var warranties = await _iRepository.warrantyRepository.GetByIds(warrantyIds); // שליפה בבת אחת
+            var warranties = await _iRepository.warrantyRepository.GetByIds(warrantyIds); 
 
             return _mapper.Map<IEnumerable<WarrantyDto>>(warranties);
         }
@@ -70,12 +70,6 @@ namespace Warranty.Service
 
         public async Task<bool> DeleteWarranty(int id)
         {
-            //מחיקת כל הרקורדים - מי שיש לו שיתוף לקובץ
-            //var records = await _iRepository.recordRepository.GetRecordsByWarrantyId(id);
-            //foreach (var record in records) { 
-            //    await _iRepository.recordRepository.Delete(record.Id);
-            //}
-            //מחיקת הקובץ עצמו
             bool succeed = await _iRepository.warrantyRepository.Delete(id);
             if (succeed)
                 await _iRepository.Save();
